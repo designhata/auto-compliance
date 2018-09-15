@@ -13,6 +13,11 @@ public class MGT7 {
 
         System.out.println(numChildren);
 
+        if (numChildren == 0) {
+            Node deleteData = ((Element) company).getElementsByTagName("DATA").item(0);
+            company.removeChild(deleteData);
+        }
+
         Element data = document.createElement("DATA");
         Element serialNum = document.createElement("S_NO");
         serialNum.appendChild(document.createTextNode(Integer.toString(numChildren + 1)));
