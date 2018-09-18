@@ -9,7 +9,6 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import org.w3c.dom.Node;
 
 import java.io.*;
-import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -24,8 +23,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 public class Main {
-    private static String source = "/home/hata/Downloads/Form_MGT-7/Form_MGT-7.pdf";
-    private static String dest = "/home/hata/Downloads/Form_MGT-7/Form_MGT-7-new-filled.pdf";
+    private static String source = "";
+    private static String dest = "";
     private static PdfDocument pdfDocument;
 
     private XfaForm xfaForm;
@@ -45,8 +44,11 @@ public class Main {
             System.exit(1);
         }
 
-//        dest = args[1];
-//        source = args[0];
+        dest = args[1];
+        source = args[0];
+
+        System.out.println(source + " " + args[0]);
+        System.out.println(dest + " " + args[1]);
     }
 
     private void getXfa() throws IOException {
@@ -150,13 +152,17 @@ public class Main {
             // Retrieve XFA form in existing pdf
             formHandler.getXfa();
 
-            // Extract XML data from existing pdf into iterable document for modification
+            // Extract DOM document from XFA form
+//            Document doc = formHandler.getDomDocument();
+
+//          // Extract XML data from existing pdf into iterable document for modification
             Document document = formHandler.getCurrentXMLData();
 
-            // Access XML data for modification
+//          // Access XML data for modification
             formHandler.accessXMLData(document.getDocumentElement());
-
+//
             mgt7.addCompany(document);
+            mgt7.calculateDebentures(document);
 
             formHandler.writeToPdf(document);
         } catch (Exception e) {

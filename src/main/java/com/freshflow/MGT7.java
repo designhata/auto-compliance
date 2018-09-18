@@ -3,15 +3,12 @@ package com.freshflow;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 public class MGT7 {
     public void addCompany(Document document) {
         Node company = document.getElementsByTagName("T_ZNCA_MGT_7_S3").item(0);
         Node noCompanies = document.getElementsByTagName("NO_COMPANIES").item(0).getFirstChild();
         int numChildren = Integer.parseInt(noCompanies.getNodeValue());
-
-        System.out.println(numChildren);
 
         if (numChildren == 0) {
             Node deleteData = ((Element) company).getElementsByTagName("DATA").item(0);
@@ -42,5 +39,28 @@ public class MGT7 {
         noCompanies.setNodeValue(Integer.toString(numChildren + 1));
 
         company.appendChild(data);
+    }
+
+    public void calculateDebentures(Document document) {
+        document.getElementsByTagName("NO_UNITS_NCD").item(0).getFirstChild().setNodeValue("12.00000000");
+        document.getElementsByTagName("NOM_VAL_UNIT_NCD").item(0).getFirstChild().setNodeValue("12");
+        document.getElementsByTagName("TOTAL_VAL_NCD").item(0).getFirstChild().setNodeValue("144.00000000");
+
+        float total = Float.parseFloat(document.getElementsByTagName("TOTAL_VAL_NCD")
+                .item(0).getFirstChild().getNodeValue())
+                + Float.parseFloat(document.getElementsByTagName("TOTAL_VAL_PCD")
+                .item(0).getFirstChild().getNodeValue())
+                + Float.parseFloat(document.getElementsByTagName("TOTAL_VAL_FCD")
+                .item(0).getFirstChild().getNodeValue())
+                + Float.parseFloat(document.getElementsByTagName("TOTAL_VAL_SLED")
+                .item(0).getFirstChild().getNodeValue())
+                + Float.parseFloat(document.getElementsByTagName("TOTAL_VAL_ULED")
+                .item(0).getFirstChild().getNodeValue())
+                + Float.parseFloat(document.getElementsByTagName("TOTAL_VAL_DEP")
+                .item(0).getFirstChild().getNodeValue());
+
+
+        document.getElementsByTagName("TOT_TOTAL_VAL").item(0)
+                .getFirstChild().setNodeValue(Float.toString(total));
     }
 }
