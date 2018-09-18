@@ -9,6 +9,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import org.w3c.dom.Node;
 
 import java.io.*;
+import java.util.Scanner;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -46,9 +47,6 @@ public class Main {
 
         dest = args[1];
         source = args[0];
-
-        System.out.println(source + " " + args[0]);
-        System.out.println(dest + " " + args[1]);
     }
 
     private void getXfa() throws IOException {
@@ -147,6 +145,7 @@ public class Main {
         parseInput(args);
 
         try {
+            Scanner scanner = new Scanner(System.in);
             Main formHandler = new Main();
 
             // Retrieve XFA form in existing pdf
@@ -161,8 +160,17 @@ public class Main {
 //          // Access XML data for modification
             formHandler.accessXMLData(document.getDocumentElement());
 //
-            mgt7.addCompany(document);
+            System.out.println("Have you added any new company (y/n)?");
+            if (scanner.nextLine().compareToIgnoreCase("y") == 0) {
+                mgt7.addCompany(document, scanner);
+            }
             mgt7.calculateDebentures(document);
+
+            System.out.println("Have you added any new line of business (y/n)?");
+            if (scanner.nextLine().compareToIgnoreCase("y") == 0) {
+                mgt7.addBusinessActivity(document, scanner);
+            }
+
 
             formHandler.writeToPdf(document);
         } catch (Exception e) {
