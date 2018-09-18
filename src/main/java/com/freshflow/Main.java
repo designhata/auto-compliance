@@ -131,12 +131,12 @@ public class Main {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File("/home/hata/Downloads/new-MGT_7.xml"));
+        StreamResult result = new StreamResult(new File("C:/Users/HaTa/Desktop/new-MGT_7.xml"));
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.transform(domSource, result);
 
         pdfDocument = new PdfDocument(new PdfReader(source), new PdfWriter(dest));
-        this.xfaForm.fillXfaForm(new FileInputStream("/home/hata/Downloads/new-MGT_7.xml"));
+        this.xfaForm.fillXfaForm(new FileInputStream("C:/Users/HaTa/Desktop/new-MGT_7.xml"));
         this.xfaForm.write(pdfDocument);
         pdfDocument.close();
     }
@@ -163,6 +163,8 @@ public class Main {
 //
             mgt7.addCompany(document);
             mgt7.calculateDebentures(document);
+            mgt7.getTurnoverAndNetworth(document);
+            mgt7.setComplianceDisclosure(document);
 
             formHandler.writeToPdf(document);
         } catch (Exception e) {

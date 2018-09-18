@@ -1,8 +1,10 @@
 package com.freshflow;
 
+import com.sun.deploy.util.SyncAccess;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Document;
+import java.util.Scanner;
 
 public class MGT7 {
     public void addCompany(Document document) {
@@ -62,5 +64,32 @@ public class MGT7 {
 
         document.getElementsByTagName("TOT_TOTAL_VAL").item(0)
                 .getFirstChild().setNodeValue(Float.toString(total));
+    }
+
+    public void getTurnoverAndNetworth(Document document){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Turnover of the Company");
+
+        String TOT_TURNOVER = sc.nextLine();
+        System.out.println("Enter Net worth of the Company");
+        String NET_WORTH_COMP = sc.nextLine();
+        document.getElementsByTagName("TOT_TURNOVER").item(0).getFirstChild().setNodeValue(TOT_TURNOVER);
+        document.getElementsByTagName("NET_WORTH_COMP").item(0).getFirstChild().setNodeValue(NET_WORTH_COMP);
+    }
+
+    public void setComplianceDisclosure(Document document){
+        System.out.println( document.getElementsByTagName("IF_NO_REASONS").item(0).getTextContent());
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Whether the company has made compliances and disclosures in respect of applicable\n" +
+                "provisions of the Companies Act, 2013 during the year (YES/NO)");
+        String RB_COMP_COMPLAIN = sc.nextLine();
+        if(RB_COMP_COMPLAIN.toLowerCase() != "yes"){
+            System.out.println("If No, give reasons/observations");
+            String IF_NO_REASONS = sc.nextLine();
+
+            document.getElementsByTagName("RB_COMP_COMPLAIN").item(0).getFirstChild().setNodeValue("NO");
+            document.getElementsByTagName("IF_NO_REASONS").item(0).setTextContent(IF_NO_REASONS);
+        }else
+        document.getElementsByTagName("RB_COMP_COMPLAIN").item(0).getFirstChild().setNodeValue("YES");
     }
 }
