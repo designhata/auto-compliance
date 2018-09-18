@@ -108,7 +108,7 @@ public class MGT7 {
         }
     }
 
-    public void getTurnoverAndNetworth(Document document){
+    public void getTurnoverAndNetworth(Document document) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Turnover of the Company");
 
@@ -119,19 +119,19 @@ public class MGT7 {
         document.getElementsByTagName("NET_WORTH_COMP").item(0).getFirstChild().setNodeValue(NET_WORTH_COMP);
     }
 
-    public void setComplianceDisclosure(Document document){
-        System.out.println( document.getElementsByTagName("IF_NO_REASONS").item(0).getTextContent());
+    public void setComplianceDisclosure(Document document) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Whether the company has made compliances and disclosures in respect of applicable\n" +
                 "provisions of the Companies Act, 2013 during the year (YES/NO)");
         String RB_COMP_COMPLAIN = sc.nextLine();
-        if(RB_COMP_COMPLAIN.toLowerCase() != "yes"){
+        if (RB_COMP_COMPLAIN.toLowerCase() != "yes") {
             System.out.println("If No, give reasons/observations");
             String IF_NO_REASONS = sc.nextLine();
 
             document.getElementsByTagName("RB_COMP_COMPLAIN").item(0).getFirstChild().setNodeValue("NO");
             document.getElementsByTagName("IF_NO_REASONS").item(0).setTextContent(IF_NO_REASONS);
-        }else
-        document.getElementsByTagName("RB_COMP_COMPLAIN").item(0).getFirstChild().setNodeValue("YES");
+        } else {
+            document.getElementsByTagName("RB_COMP_COMPLAIN").item(0).getFirstChild().setNodeValue("YES");
+        }
     }
 }
